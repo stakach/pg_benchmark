@@ -10,6 +10,7 @@ PG_DATABASE_URL         = ENV["PG_DATABASE_URL"]
 PG_CONNECTION_POOL_SIZE = ENV["PG_CONNECTION_POOL_SIZE"]?.presence.try(&.to_i?) || 50
 
 Clear::SQL.init(PG_DATABASE_URL)
+PgORM::Database.parse(PG_DATABASE_URL)
 
 # Clear version of ORM
 class Booking
