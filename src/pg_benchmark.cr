@@ -7,7 +7,6 @@ require "digest/md5"
 
 TENANT_ID = (ENV["TENANT_ID"]? || "2").to_i
 PG_DATABASE_URL         = ENV["PG_DATABASE_URL"]
-PG_CONNECTION_POOL_SIZE = ENV["PG_CONNECTION_POOL_SIZE"]?.presence.try(&.to_i?) || 50
 
 Clear::SQL.init(PG_DATABASE_URL)
 PgORM::Database.parse(PG_DATABASE_URL)
@@ -484,8 +483,14 @@ ending = 1685520000
 starting = 1685502271
 booking_type = "desk"
 zones = "zone-CfeL8ROfjK,zone-CfeL9JjWxZ"
-
 json_data = nil
+
+puts "warming up..."
+10.times do
+  json_data = PgBenchmark.pg_make_query(ending, starting, booking_type, zones)
+end
+
+puts "benchmarking..."
 Benchmark.ips do |bm|
   bm.report("PG ORM") do
     json_data = PgBenchmark.pg_make_query(ending, starting, booking_type, zones)
