@@ -5,7 +5,7 @@ require "auto_initialize"
 require "clear"
 require "digest/md5"
 
-TENANT_ID = ENV["TENANT_ID"]? || "authority-I1nOn3KCZil"
+TENANT_ID = (ENV["TENANT_ID"]? || "2").to_i
 PG_DATABASE_URL         = ENV["PG_DATABASE_URL"]
 PG_CONNECTION_POOL_SIZE = ENV["PG_CONNECTION_POOL_SIZE"]?.presence.try(&.to_i?) || 50
 
