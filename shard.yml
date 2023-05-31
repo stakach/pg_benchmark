@@ -7,6 +7,7 @@ authors:
 dependencies:
   placeos-models:
     github: placeos/models
+    commit: 5dd76700ce0cc56463b5e784d7cb597af64200da
 
   clear:
     github: place-labs/clear
