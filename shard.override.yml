@@ -1,0 +1,3 @@
+dependencies:
+  pg:
+    github: will/crystal-pg

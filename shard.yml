@@ -1,0 +1,24 @@
+name: pg_benchmark
+version: 0.1.0
+
+authors:
+  - Stephen von Takach <steve@place.tech>
+
+dependencies:
+  placeos-models:
+    github: placeos/models
+
+  clear:
+    github: place-labs/clear
+    branch: master
+
+  auto_initialize:
+    github: kostya/auto_initialize
+
+targets:
+  pg_benchmark:
+    main: src/pg_benchmark.cr
+
+crystal: 1.8.2
+
+license: MIT
