@@ -475,6 +475,19 @@ module PgBenchmark
     result = query.to_a.map &.as_h
     result.to_json
   end
+
+  def self.regular_bench
+    puts "benchmarking..."
+    Benchmark.ips do |bm|
+      bm.report("PG ORM") do
+        json_data = PgBenchmark.pg_make_query(ending, starting, booking_type, zones)
+      end
+
+      bm.report("Clear ORM") do
+        json_data = PgBenchmark.clear_make_query(ending, starting, booking_type, zones)
+      end
+    end
+  end
 end
 
 require "option_parser"
@@ -490,13 +503,16 @@ puts "warming up..."
   json_data = PgBenchmark.pg_make_query(ending, starting, booking_type, zones)
 end
 
-puts "benchmarking..."
-Benchmark.ips do |bm|
-  bm.report("PG ORM") do
+# PgBenchmark.regular_bench
+
+puts "sleeping for 1 minute..."
+sleep 1.minute
+
+4.times do |count|
+  puts "making request #{count}"
+  time = Time.measure do
     json_data = PgBenchmark.pg_make_query(ending, starting, booking_type, zones)
   end
 
-  bm.report("Clear ORM") do
-    json_data = PgBenchmark.clear_make_query(ending, starting, booking_type, zones)
-  end
+  puts "Execution time for request #{count}: #{time.total_seconds} seconds"
 end
